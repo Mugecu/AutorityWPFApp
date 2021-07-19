@@ -1,0 +1,44 @@
+﻿<Window x:Class="AutorityWPFApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:AutorityWPFApp.ViewModels"
+        xmlns:controls ="clr-namespace:AutorityWPFApp.Views.UserControls"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Border MinWidth="400" Margin="15" Background="AliceBlue" VerticalAlignment="Center" Padding="30" CornerRadius="30" MaxWidth="500">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightCoral" ShadowDepth="0"/>
+            </Border.Effect>
+            <StackPanel>
+                <Grid Grid.RowSpan="1" Margin="10">
+                    <TextBlock Text="{Binding Hellow}" FontSize="20" FontStyle="Oblique" FontWeight="Bold" Grid.Column="1" Margin="5"/>
+                    <Button Command="{Binding CloseAplicationCommand}" Background="PaleVioletRed" Width="60" Height="30" Grid.Column="2" HorizontalAlignment="Right" Content="Выход" FontWeight="Bold" Margin="5"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Логин  " VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Text="{Binding LoginNameTextBox}"  Margin="5" Height="25" Width="250" MinWidth="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Пароль" VerticalAlignment="Center" Margin="5"/>
+                    <controls:PaswordUserControl _DataFromPaswordBox="{Binding PasswordBox,
+                        UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5" Height="25" Width="250" MinWidth="200"/>
+                </StackPanel>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Command="{Binding OpenRegistrationWindowCommand }" Grid.Column="0" Background="Aqua" Content="Регистрация" Height="30" Width="90" FontWeight="Bold"/>
+                    <Button Command="{Binding AutorityUserInAppCommand}" Grid.Column="1" HorizontalAlignment="Right" Background="LawnGreen" Height="30" Width="90" Content="Авторизация" FontWeight="Bold"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>
