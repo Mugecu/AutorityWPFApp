@@ -4,6 +4,7 @@ using System.ComponentModel;
 using AutorityWPFApp.Models;
 using System.Windows.Input;
 using AutorityWPFApp.Infrastructure;
+using System.Windows;
 
 namespace AutorityWPFApp.ViewModels
 {
@@ -93,11 +94,8 @@ namespace AutorityWPFApp.ViewModels
 
         private void OnAddUserInDbCommandExecuted(object p)
         {
-            // TODO : Реализовать запись пользователя в БД
             _actionWithData = new ActionWithDb();
             UserEntity user = new UserEntity();
-            // TODO : Реализовать дату регистрации пользователя в БД
-            AutorityDate autorityDate = new AutorityDate();
             if (CheackPasswordBoxForCorrectRepeatPassword())
             {
                 if (GetUserNumber > 0 && GetUserNumber < 4)
@@ -105,12 +103,16 @@ namespace AutorityWPFApp.ViewModels
                     user.UserName = GetStringFromTextBoxFIO;
                     user.LoginName = GetStringFromTextBoxLogin;
                     user.Password = ConvertFromSecurityString(DataFromPasswordBox);
-                    user.AccessRight = GetUserNumber;                   
-
-                    _actionWithData.WriteData(user);
-
-
+                    user.AccessRight = GetUserNumber;
+                    if(_actionWithData.WriteData(user))
+                        MessageBox.Show("Пользователь успешно добавлен.");
+                    else
+                        MessageBox.Show("Ошибка записи пользователя.");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Проверте правильность введения пароля.");
             }
         }
         #endregion
@@ -130,8 +132,7 @@ namespace AutorityWPFApp.ViewModels
             GetRadioButtonEnable = new LambdaCommand(OnRadioButtonEnableExecuted,CanRadioButtonEnableExecute);
             AddUserInDbCommand = new LambdaCommand(OnAddUserInDbCommandExecuted, CanAddUserInDbCommandExecute);
         }
-        #endregion
-  
+        #endregion  
         #region Метод преобразования SecurityString в string
         private string ConvertFromSecurityString(SecureString security)
         {
@@ -146,7 +147,7 @@ namespace AutorityWPFApp.ViewModels
             return false;
         }
         #endregion
-        #region Проверка наличия такого пользователя в БД
+        #region Метод проверки наличия пользователя в БД
         private bool GetUserFromDB()
         {
             _actionWithData = new ActionWithDb();

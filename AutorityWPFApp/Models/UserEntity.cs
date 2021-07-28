@@ -7,7 +7,7 @@ namespace AutorityWPFApp.Models
     [Table (Name ="UsersEntity")]
     class UserEntity
     {
-        [Column(Name ="Id", DbType ="int", IsDbGenerated =true)]
+        [Column(Name ="Id", DbType ="int", IsDbGenerated =true, IsPrimaryKey =true)]
         public int Id { get; set; }
 
         [Column(Name = "UserName")]
